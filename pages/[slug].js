@@ -15,8 +15,16 @@ const Post = ({ post, blockMap }) => {
   if (!post) {
     return <NotFound statusCode={404} />
   }
+
+  let postLanguage = post.find((t)=> t.language === router.locale)
+
+  if (postLanguage === undefined)
+      postLanguage = post[0]
+
+  let blockMapLanguage = blockMap[postLanguage.language]
+
   return (
-    <Layout blockMap={blockMap} frontMatter={post} fullWidth={post.fullWidth} />
+    <Layout blockMap={blockMapLanguage} frontMatter={postLanguage} fullWidth={post.fullWidth} />
   )
 }
 
@@ -29,11 +37,18 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params: { slug } }) {
-  const posts = await getAllPosts({ onlyNewsletter: false })
-  const post = posts.find((t) => t.slug === slug)
+  const allPosts = await getAllPosts({ onlyNewsletter: false })
+  const post = allPosts.filter((t) => t.slug === slug)
+
+  let blockMap = {}
+
+  for (const item of post) {
+    const resultPostBlock = await getPostBlocks(item.id)
+    blockMap[item.language] =  resultPostBlock
+  }
 
   try {
-    const blockMap = await getPostBlocks(post.id)
+    //const blockMap = await getPostBlocks(post.id)
     return {
       props: {
         post,

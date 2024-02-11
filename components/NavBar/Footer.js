@@ -93,7 +93,9 @@ const Footer = ({ fullWidth }) => {
         </div>
 
         <div className='text-gray-400 text-xs font-light py-4'>
-          © {from === y || !from ? y : `${from} - ${y}`} | {BLOG.author}
+          © {from === y || !from ? y : `${from} - ${y}`} | Page based on <a className='underline' href={`${BLOG.NotionicLink}`}>
+            Notionic
+            </a>
           <p className='md:float-right'>
             {t.FOOTER.COPYRIGHT_START}
             <a className='underline' href={`${t.FOOTER.COPYRIGHT_LINK}`}>

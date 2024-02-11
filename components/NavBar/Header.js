@@ -5,7 +5,7 @@ import { lang } from '@/lib/lang'
 import { useRouter } from 'next/router'
 import {
   HomeIcon,
-  NewspaperIcon,
+  UserIcon,
   CollectionIcon,
   SparklesIcon,
   SearchIcon,
@@ -36,21 +36,21 @@ const NavBar = () => {
       name: t.NAV.INDEX,
       to: BLOG.path || '/',
       icon: <HomeIcon className='inline-block mb-1 h-5 w-5' />,
-      show: true
+      show: false
     },
     {
       id: 1,
-      name: t.NAV.NEWSLETTER,
-      to: '/newsletter',
-      icon: <NewspaperIcon className='inline-block mb-1 h-5 w-5' />,
-      show: BLOG.pagesShow.newsletter
+      name: t.NAV.ABOUT,
+      to: BLOG.path || '/about',
+      icon: <UserIcon className='inline-block mb-1 h-5 w-5' />,
+      show: BLOG.pagesShow.about
     },
     {
       id: 2,
-      name: t.NAV.NOTES,
-      to: '/notes',
+      name: t.NAV.POSTS,
+      to: '/search',
       icon: <CollectionIcon className='inline-block mb-1 h-5 w-5' />,
-      show: BLOG.pagesShow.notes
+      show: BLOG.pagesShow.posts
     },
     {
       id: 3,
@@ -58,13 +58,6 @@ const NavBar = () => {
       to: '/projects',
       icon: <SparklesIcon className='inline-block mb-1 h-5 w-5' />,
       show: BLOG.pagesShow.projects
-    },
-    {
-      id: 4,
-      name: t.NAV.SEARCH,
-      to: '/search',
-      icon: <SearchIcon className='inline-block mb-1 h-5 w-5' />,
-      show: true
     }
   ]
   return (
@@ -77,7 +70,7 @@ const NavBar = () => {
               <Link passHref href={link.to} key={link.id} scroll={false}>
                 <li
                   className={`${
-                    activeMenu === link.to ? 'bg-gray-200 dark:bg-gray-700' : ''
+                    activeMenu === link.to || activeMenu === (link.to+ "-pt") ? 'bg-gray-200 dark:bg-gray-700' : ''
                   } hover:bg-gray-200 dark:hover:bg-gray-700 cursor-pointer rounded-lg block py-1 px-2 nav`}
                 >
                   <div className='font-light'>
@@ -92,8 +85,13 @@ const NavBar = () => {
       </ul>
 
       <div className='nav-func-btn block'>
+        <Link passHref href='/' scroll={false}> 
+          <button aria-label='HomePage' className='p-2 hover:bg-gray-200 dark:hover:bg-gray-700 cursor-pointer rounded-lg dark:text-gray-100'>
+            <HomeIcon className=' h-5 w-5 ' />
+          </button>
+        </Link> 
         <ThemeSwitcher />
-        <LangSwitcher />
+        <LangSwitcher />  
       </div>
 
       {/* Mobile Phone Menu */}
@@ -151,13 +149,14 @@ const Header = ({ navBarTitle, fullWidth }) => {
     const observer = new window.IntersectionObserver(handler)
     observer.observe(sentinelEl)
 
-    window.addEventListener('scroll', () => {
-      if (window.pageYOffset > 400) {
-        setShowTitle(true)
-      } else {
-        setShowTitle(false)
-      }
-    })
+    // Não aparecer nome do blog
+    // window.addEventListener('scroll', () => {
+    //   if (window.pageYOffset > 400) {
+    //     setShowTitle(true)
+    //   } else {
+    //     setShowTitle(false)
+    //   }
+    // })
     return () => {
       sentinelEl && observer.unobserve(sentinelEl)
     }
@@ -192,7 +191,7 @@ const Header = ({ navBarTitle, fullWidth }) => {
                 !showTitle ? 'hidden' : 'hidden xl:block'
               }`}
             >
-              {BLOG.title},{' '}
+              {BLOG.title}{' '}
               <span className='font-normal'>{BLOG.description}</span>
             </p>
           )}

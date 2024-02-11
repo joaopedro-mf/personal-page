@@ -3,13 +3,20 @@ import BlogPost from '@/components/BlogPost'
 import Container from '@/components/Container'
 import Tags from '@/components/Common/Tags'
 import PropTypes from 'prop-types'
+import Pagination from '@/components/Pagination'
 import { lang } from '@/lib/lang'
 import { useRouter } from 'next/router'
+import PaginationSearch from '@/components/PaginationSearch'
+
+import BLOG from '@/blog.config'
 
 const SearchLayout = ({ tags, posts, currentTag }) => {
   const [searchValue, setSearchValue] = useState('')
+  const [pageValue, setPageValue] = useState(1)
   const { locale } = useRouter()
   const t = lang[locale]
+
+
 
   let filteredBlogPosts = []
   if (posts) {
@@ -19,6 +26,9 @@ const SearchLayout = ({ tags, posts, currentTag }) => {
       return searchContent.toLowerCase().includes(searchValue.toLowerCase())
     })
   }
+
+  let showPosts = filteredBlogPosts.slice((pageValue-1)*BLOG.postsPerPage, pageValue*BLOG.postsPerPage);
+  let nextPage =  filteredBlogPosts.slice((pageValue)*BLOG.postsPerPage, (pageValue+1)*BLOG.postsPerPage);
 
   return (
     <Container>
@@ -31,7 +41,7 @@ const SearchLayout = ({ tags, posts, currentTag }) => {
               : `${t.SEARCH.PLACEHOLDER}`
           }
           className='w-full bg-white dark:bg-gray-600 shadow-md rounded-lg outline-none focus:shadow p-3'
-          onChange={(e) => setSearchValue(e.target.value)}
+          onChange={(e) => {setSearchValue(e.target.value); setPageValue(1)  }}
         />
         <svg
           className='absolute right-3 top-3 h-5 w-5 text-gray-400'
@@ -51,13 +61,14 @@ const SearchLayout = ({ tags, posts, currentTag }) => {
       <Tags tags={tags} currentTag={currentTag} />
       <div className='article-container my-8'>
         {!filteredBlogPosts.length && (
-          <p className='text-gray-500 dark:text-gray-300'>
-            {t.SEARCH.NOT_FOUND}
-          </p>
+          <p className='text-gray-500 dark:text-gray-300'> {t.SEARCH.NOT_FOUND} </p>
         )}
-        {filteredBlogPosts.slice(0, 20).map((post) => (
+        {showPosts.map((post) => (
           <BlogPost key={post.id} post={post} />
         ))}
+         {<PaginationSearch page={pageValue} showNext={nextPage.length>0} 
+                            addPage={() => setPageValue(pageValue+1) } 
+                            decrPage={() => setPageValue(pageValue-1) }/>}
       </div>
     </Container>
   )

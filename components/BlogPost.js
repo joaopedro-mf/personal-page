@@ -2,7 +2,7 @@ import BLOG from '@/blog.config'
 import Link from 'next/link'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
-
+import TagItemPost from '@/components/Common/TagItemPost'
 import FormattedDate from '@/components/Common/FormattedDate'
 
 const BlogPost = ({ post }) => {
@@ -28,6 +28,11 @@ const BlogPost = ({ post }) => {
                 <FormattedDate date={post.date} />
               </span>
             </header>
+            <div className='flex flex-nowrap max-w-full overflow-x-auto article-tags'>
+            {post.tags !== undefined ? post.tags.map((tag) => (
+                <TagItemPost key={tag} tag={tag} />
+              )): ""}
+            </div>
             <p className='font-light hidden md:block leading-8 text-gray-700 dark:text-gray-300'>{post.summary}</p>
             {/* w-4/5  */}
           </div>

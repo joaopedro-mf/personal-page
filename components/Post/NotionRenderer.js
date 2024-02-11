@@ -54,13 +54,14 @@ const components = {
 export default function NotionRenderer (props) {
   const { locale } = useRouter()
   const mapPageUrl = (id) => {
-    // console.log('mapPageUrl', BLOG.lang.split('-')[0])
+    console.log('mapPageUrl', BLOG.lang.split('-')[0])
     if (locale === BLOG.lang.split('-')[0]) {
       return '/s/' + id.replace(/-/g, '')
     } else {
       return '/' + locale + '/s/' + id.replace(/-/g, '')
     }
   }
+
   return (
     <Renderer
       components={components}

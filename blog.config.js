@@ -1,27 +1,29 @@
 const BLOG = {
-  title: 'JoaoDeFaria Page',
+  title: 'Joao de Faria Blog',
   author: '',
   email: 'i@.me',
   link: 'https://.me',
-  newsletter: 'Notionic Weekly',
-  description: 'A static blog build on top of Notion and Next.js',
+  newsletter: '',
+  description: '',
   lang: 'en-US', // ['en-US', 'zh-CN', 'zh-HK', 'zh-TW', 'ja-JP', 'es-ES']
   timezone: 'Asia/Shanghai', // See https://en.wikipedia.org/wiki/List_of_tz_database_time_zones for all options.
-  appearance: 'auto', // ['light', 'dark', 'auto'],
+  appearance: 'dark', // ['light', 'dark', 'auto'],
   font: 'sans-serif', // ['sans-serif', 'serif']
   lightBackground: '#F6F8FA', // use hex value, don't forget '#' e.g #fffefc
   darkBackground: '#212936', // use hex value, don't forget '#'
   path: '', // leave this empty unless you want to deploy Notionic in a folder
   since: 2022, // If leave this empty, current year will be used.
-  postsPerPage: 10,
+  postsPerPage: 5,
   sortByDate: true,
   pagesShow: {
     newsletter: true,
-    notes: true,
+    about: true,
+    notes: false,
     projects: true,
     contact: true,
-    books: true,
-    friends: false
+    books: false,
+    friends: false,
+    posts:true
   },
   showWeChatPay: false,
   previewImagesEnabled: true,
@@ -30,11 +32,12 @@ const BLOG = {
   defaultCover: '/cover.jpg',
   socialLink: {
     twitter: '',
+    linkedin: 'https://www.linkedin.com/in/jo%C3%A3o-pedro-miranda-de-faria-660057157/',
     github: 'https://github.com/joaopedro-mf',
     telegram: 'https://t.me/joaopedro_mf'
   },
   seo: {
-    keywords: ['Notionic', 'Zuolan', 'Blog'],
+    keywords: [ 'Blog'],
     googleSiteVerification: '' // Remove the value or replace it with your own google site verification code
   },
   notionPageId: process.env.NOTION_PAGE_ID, // DO NOT CHANGE THIS! Edit .env file!
@@ -76,7 +79,8 @@ const BLOG = {
       repo: ''
     }
   },
-  isProd: process.env.VERCEL_ENV === 'production' // distinguish between development and production environment (ref: https://vercel.com/docs/environment-variables#system-environment-variables)
+  isProd: process.env.VERCEL_ENV === 'production' ,// distinguish between development and production environment (ref: https://vercel.com/docs/environment-variables#system-environment-variables)
+  NotionicLink : 'https://github.com/izuolan/notionic'
 }
 // export default BLOG
 module.exports = BLOG
