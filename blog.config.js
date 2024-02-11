@@ -1,5 +1,5 @@
 const BLOG = {
-  title: 'Notionic',
+  title: 'JoaoDeFaria Page',
   author: '',
   email: 'i@.me',
   link: 'https://.me',

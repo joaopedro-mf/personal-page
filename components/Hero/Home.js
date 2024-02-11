@@ -1,6 +1,9 @@
 import BLOG from '@/blog.config'
 import Link from 'next/link'
-import Avatar from './NotionAvatar.js'
+//import Avatar from './NotionAvatar.js'
+import  Avatar from '../../public/landing-avatar.gif'
+//const Avatar = require("./landing-avatar.gif");
+
 import Social from '../Common/Social.js'
 import { lang } from '@/lib/lang'
 import { useRouter } from 'next/router'
@@ -80,7 +83,9 @@ const Hero = ({ blockMap }) => {
           </div>
         </div>
         <div className='w-2/5'>
-          <Avatar className='text-gray-600 dark:text-gray-300' />
+          {/* <Avatar className='text-gray-600 dark:text-gray-300' /> */}
+          <img className='text-gray-600 dark:text-gray-300' src={Avatar} alt="avatar" />
+          {/* <img src={require('../../public/landing-avatar.gif')} alt="avatar..." /> */}
         </div>
       </div>
     </>
