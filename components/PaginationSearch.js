@@ -12,7 +12,6 @@ const PaginationSearch = ({ page, showNext, addPage, decrPage }) => {
   if (currentPage === 1 && showNext) additionalClassName = 'justify-end'
   if (currentPage !== 1 && !showNext) additionalClassName = 'justify-start'
 
-  console.log(page)
   return (
     <div
       className={`flex font-medium text-black dark:text-gray-100 ${additionalClassName}`}

@@ -2,27 +2,24 @@ import { getAllPosts } from '@/lib/notion'
 import SearchLayout from '@/layouts/search'
 import { useRouter } from 'next/router'
 
-export default function Tag({ tags, posts, currentTag }) {
-  const { locale } = useRouter()
+export default function Tag({ posts, currentTag }) {  
   
-  const postsLanguage = posts.filter((post) => post?.language == locale)
-  const filteredPosts = posts.filter(
-    (post) => post && post.tags && post.tags.includes(currentTag) && post?.language == locale
-  )
+  // to remove error pre-render next.js 
+  let filteredPosts = []
+  if (posts !== undefined){
+    filteredPosts = posts
+  }
 
-  const tagsLanguage = getAllTags(postsLanguage)
-
-  return <SearchLayout tags={tagsLanguage} posts={filteredPosts} currentTag={currentTag} />
+  return <SearchLayout posts={filteredPosts} currentTag={currentTag} filterTag={true}/>
 }
 
 export async function getStaticProps({ params }) {
   const currentTag = params.tag
-  const posts = await getAllPosts({ onlyProjects: false , onlyPost: true})
+  const posts = await getAllPosts({ onlyProjectsAndPosts: true})
   const tags = getAllTags(posts)
 
   return {
     props: {
-      tags,
       posts: posts,
       currentTag
     },
@@ -31,7 +28,7 @@ export async function getStaticProps({ params }) {
 }
 
 export async function getStaticPaths() {
-  const posts = await getAllPosts({ onlyProjects: false, onlyPost: true })
+  const posts = await getAllPosts({ onlyProjectsAndPosts: true })
   const tags = getAllTags(posts)
   return {
     paths: Object.keys(tags).map((tag) => ({ params: { tag } })),

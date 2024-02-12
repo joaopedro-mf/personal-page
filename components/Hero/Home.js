@@ -15,6 +15,8 @@ const Hero = ({ blockMap }) => {
   const t = lang[locale]
   const showButtons = false
 
+  let actualblockMap = blockMap[locale]
+
   const clickCopy = async () => {
     setShowCopied(true)
     navigator.clipboard.writeText(BLOG.link + '/feed')
@@ -29,7 +31,7 @@ const Hero = ({ blockMap }) => {
         <div className='flex flex-col md:w-3/5 md:items-start mb-6 md:mb-0 text-left '>
           <NotionRenderer
             className='md:ml-0'
-            blockMap={blockMap}
+            blockMap={actualblockMap}
             frontMatter={{}}
             subPageTitle={null}
           />
